@@ -1,6 +1,6 @@
-import './subject.css';
+import './style.css';
 
-import { BehaviorSubject, Observable, ReplaySubject, Subject } from 'rxjs';
+import { AsyncSubject, BehaviorSubject, Observable, ReplaySubject, Subject } from 'rxjs';
 // subject与observable
 //region
 //多播与单播
@@ -27,7 +27,7 @@ subject.subscribe(subject => {
 
 subject.next(Math.random());
 
-//生产者与消费者
+//如何将observable转换为subject
 const obserbable2 = new Observable(observer => {
    observer.next(Math.random())
 });
@@ -69,7 +69,7 @@ const replaySubject = new ReplaySubject(3);
 replaySubject.next(1);
 
 replaySubject.subscribe(data => {
-  console.log('subscribr A', data)
+  // console.log('subscribr A', data)
 });
 
 replaySubject.next(2);
@@ -78,11 +78,23 @@ replaySubject.next(4);
 replaySubject.next(5);
 
 replaySubject.subscribe(data => {
-  console.log('subscribe B', data)
+  // console.log('subscribe B', data)
 })
 //endregion
 
 //AsyncSubject
+//异步subject，
 //region
+const asyncSubject = new AsyncSubject();
+asyncSubject.next(1);
 
+asyncSubject.subscribe(data => {
+  console.log('subscriber A',data);
+});
+asyncSubject.next(2);
+asyncSubject.complete();
+
+asyncSubject.subscribe(data => {
+  console.log('subscriber B',data)
+});
 //endregion
